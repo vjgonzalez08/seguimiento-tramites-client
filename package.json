@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3014",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start -p 3014",
+    "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
+    "antd": "^6.2.2",
+    "axios": "^1.13.4",
+    "highcharts": "^12.5.0",
+    "highcharts-react-official": "^3.2.3",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
