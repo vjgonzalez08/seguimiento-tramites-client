@@ -9,8 +9,8 @@ const { Header } = Layout;
 const menuItems = [
   { key: 'conservacion', label: <Link href="/conservacion">Conservación</Link> },
   { key: 'actualizacion', label: <Link href="/actualizacion">Actualización</Link> },
-  { key: 'claudia-lara', label: <Link href="/claudia-lara">Claudia Lara</Link> },
-  { key: 'buscar', label: <Link href="/buscar">Buscar</Link> },
+  { key: 'calidad', label: <Link href="/calidad">Calidad</Link> },
+  /*{ key: 'buscar', label: <Link href="/buscar">Buscar</Link> },*/
 ];
 
 const Navbar = () => {
@@ -42,12 +42,16 @@ const Navbar = () => {
         <div
           style={{
             position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '0 2rem', // respeta el padding del Header
           }}
         >
           <Menu
             mode="horizontal"
+            disabledOverflow
             items={menuItems}
             style={{
               borderBottom: 'none',

@@ -7,7 +7,6 @@ import HighchartsReact from 'highcharts-react-official';
 import { Table, Select, Tag, Button } from 'antd';
 import * as XLSX from 'xlsx';
 import { DownloadOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
 
 
 import {
@@ -21,7 +20,7 @@ import {
   getPromedioDiasSinRespuesta,     // ✅ BLOQUE 3
   getDevueltosPorPrediadorResumen, // BLOQUE 5 Gráfica detalle x prediador
   getDevueltosPorPrediadorDetalle, // BLOQUE 5 Tabla detalle x prediador
-} from '@/features/conservacion/service';
+} from '@/features/actualizacion/service';
 
 /* ===== Inicialización dinámica de módulos Highcharts ===== */
 function initHighchartsModule(mod, Highcharts) {
@@ -72,7 +71,7 @@ function KpiItem({ label, value, tone = 'neutral' }) {
   );
 }
 
-export default function ConservacionPage() {
+export default function ActualizacionPage() {
   // ✅ Flag para NO eliminar tu UI vieja (solo la ocultamos por ahora)
   const SHOW_OLD_CARDS = false;
 
@@ -133,38 +132,9 @@ const conRespTotalSla = useMemo(() => {
   const [prediadorDetallePageSize, setPrediadorDetallePageSize] = useState(10);
   const [prediadorDetalleSortField, setPrediadorDetalleSortField] = useState('dias_transcurridos');
   const [prediadorDetalleSortOrder, setPrediadorDetalleSortOrder] = useState('descend');
-  const [prediadorDetalleFiltroPrediador, setPrediadorDetalleFiltroPrediador] = useState(null);
 
+  const prediadorDetalleRequestRef = useRef(false);
   
-
-  //const prediadorDetalleRequestRef = useRef(false);
-  
-  /*======NUEVO =====*/
-    const rqPrediadorDetalle = useQuery({
-      queryKey: [
-        'conservacion',
-        'tabla',
-        'prediador-detalle',
-        prediadorDetallePage,
-        prediadorDetallePageSize,
-        prediadorDetalleSortField,
-        prediadorDetalleSortOrder,
-        prediadorDetalleFiltroPrediador,
-      ],
-      queryFn: () =>
-        getDevueltosPorPrediadorDetalle({
-          page: prediadorDetallePage,
-          pageSize: prediadorDetallePageSize,
-          sortField: prediadorDetalleSortField,
-          sortOrder: prediadorDetalleSortOrder,
-          prediador: prediadorDetalleFiltroPrediador,
-        }),
-      keepPreviousData: true,        // 👈 clave: no parpadea
-      staleTime: 24 * 60 * 60 * 1000 // datos cambian 1 vez/día
-    });
-
-
-  /*
   const loadPrediadorDetalle = async (overrides = {}) => {
     if (prediadorDetalleRequestRef.current) return;
       prediadorDetalleRequestRef.current = true;
@@ -189,7 +159,7 @@ const conRespTotalSla = useMemo(() => {
     setPrediadorDetalleLoading(false);
   }
 };
-*/
+
 
 /* FUNCIÓN PARA EXPORTAR A EXCEL */
 const exportPrediadorDetalleToExcel = async () => {
@@ -279,116 +249,7 @@ const exportPrediadorDetalleToExcel = async () => {
 };
 
 
-  /* =====NUEVO React Query — KPIs Conservación ===== */
-    const rqTotalDevueltos = useQuery({
-      queryKey: ['conservacion', 'kpi', 'total-devueltos'],
-      queryFn: getTotalTramitesDevueltos,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqDevueltosConRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'devueltos-con-respuesta'],
-      queryFn: getTotalTramitesDevueltosConRespuesta,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqDevueltosSinRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'devueltos-sin-respuesta'],
-      queryFn: getTotalTramitesDevueltosSinRespuesta,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqCorteSap = useQuery({
-      queryKey: ['conservacion', 'kpi', 'corte-sap'],
-      queryFn: getCorteDatosSap,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqCumplenConRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'con-respuesta-cumplen'],
-      queryFn: getTramitesDevueltosCumplen,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqSinRespuestaSla = useQuery({
-      queryKey: ['conservacion', 'kpi', 'sin-respuesta-sla'],
-      queryFn: getTramitesDevueltosSinRespuestaSla,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqPromDiasRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'promedio-dias-respuesta'],
-      queryFn: getPromedioDiasRespuesta,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqPromDiasSinRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'promedio-dias-sin-respuesta'],
-      queryFn: getPromedioDiasSinRespuesta,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-    const rqResumenPrediador = useQuery({
-      queryKey: ['conservacion', 'b5', 'prediador-resumen'],
-      queryFn: getDevueltosPorPrediadorResumen,
-      staleTime: 24 * 60 * 60 * 1000,
-    });
-
-
-  /* =====NUEVO Sincronizar KPIs desde React Query ===== */
-    useEffect(() => {
-      if (rqTotalDevueltos.data?.success) {
-        setTotal(rqTotalDevueltos.data.total);
-      }
-
-      if (rqDevueltosConRespuesta.data?.success) {
-        setTotalConRespuesta(rqDevueltosConRespuesta.data.total);
-      }
-
-      if (rqDevueltosSinRespuesta.data?.success) {
-        setTotalSinRespuesta(rqDevueltosSinRespuesta.data.total);
-      }
-
-      if (rqCorteSap.data?.success) {
-        setFechaCorte(rqCorteSap.data.fecha_max);
-      }
-
-      if (rqCumplenConRespuesta.data?.success) {
-        setCumplen(rqCumplenConRespuesta.data.cumplen);
-        setTotalRespuesta(rqCumplenConRespuesta.data.total_con_respuesta);
-      }
-
-      if (rqSinRespuestaSla.data?.success) {
-        setSinRespCumplenSla(rqSinRespuestaSla.data.cumplen);
-        setSinRespNoCumplenSla(rqSinRespuestaSla.data.no_cumplen);
-      }
-
-      if (rqPromDiasRespuesta.data?.success) {
-        setPromDiasRespuesta(rqPromDiasRespuesta.data.promedio_dias);
-      }
-
-      if (rqPromDiasSinRespuesta.data?.success) {
-        setPromDiasSinRespuesta(rqPromDiasSinRespuesta.data.promedio_dias);
-      }
-
-      if (rqResumenPrediador.data?.success) {
-        setPrediadorResumen(rqResumenPrediador.data.rows || []);
-      }
-    }, [
-      rqTotalDevueltos.data,
-      rqDevueltosConRespuesta.data,
-      rqDevueltosSinRespuesta.data,
-      rqCorteSap.data,
-      rqCumplenConRespuesta.data,
-      rqSinRespuestaSla.data,
-      rqPromDiasRespuesta.data,
-      rqPromDiasSinRespuesta.data,
-      rqResumenPrediador.data,
-    ]);
-
-
-
-  /* =====NUEVO Carga módulos Highcharts ===== */
+  /* ===== Carga módulos Highcharts ===== */
   useEffect(() => {
     let mounted = true;
 
@@ -403,19 +264,7 @@ const exportPrediadorDetalleToExcel = async () => {
     return () => (mounted = false);
   }, []);
 
-
-      /* ===== Sincronizar KPI Total desde React Query ===== */
-    useEffect(() => {
-      const d = rqTotalDevueltos.data;
-      if (d?.success) {
-        setTotal(d.total);
-      }
-    }, [rqTotalDevueltos.data]);
-
-  
-
-  /* ===== Consumo de servicios existentes SIN CACHÉ ===== */
-  /*
+  /* ===== Consumo de servicios existentes ===== */
   useEffect(() => {
     getTotalTramitesDevueltos().then((d) => d.success && setTotal(d.total));
     getTotalTramitesDevueltosConRespuesta().then((d) => d.success && setTotalConRespuesta(d.total));
@@ -447,10 +296,8 @@ const exportPrediadorDetalleToExcel = async () => {
       if (d.success) setPrediadorResumen(d.rows || []);
     });
   }, []);
-  */
 
   // BLOQUE 5
-  /*
   useEffect(() => {
     loadPrediadorDetalle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -461,7 +308,7 @@ const exportPrediadorDetalleToExcel = async () => {
     prediadorDetalleSortField,
     prediadorDetalleSortOrder,
   ]);
-*/
+
 
   const totalNum = useMemo(() => toNumberSafe(total), [total]);
   const conRespNum = useMemo(() => toNumberSafe(totalConRespuesta), [totalConRespuesta]);
@@ -658,7 +505,7 @@ const exportPrediadorDetalleToExcel = async () => {
         {/* ===== HEADER CONTEXTO + CORTE SAP ===== */}
         <div style={{ marginBottom: '1rem' }}>
           <div style={{ fontSize: '1.15rem', fontWeight: 750, color: '#1f1f1f', marginBottom: 6 }}>
-            Conservación
+            Actualización
           </div>
           <div style={{ fontSize: '1.15rem', fontWeight: 750, color: '#1f1f1f', marginBottom: 6 }}>
             Dashboard - Seguimiento Trámites Devueltos
@@ -1018,10 +865,8 @@ const exportPrediadorDetalleToExcel = async () => {
           <Table
             size="small"   // 👈 TEXTO MÁS PEQUEÑO
             rowKey={(r) => `${r.nm_solicitud}-${r.prediador_sap}-${r.revisor_sap}-${r.fc_recepcion_tmt}`}
-            dataSource={rqPrediadorDetalle.data?.rows || []}
-            loading={rqPrediadorDetalle.isFetching}
-            //loading={prediadorDetalleLoading}
-            //dataSource={prediadorDetalle}
+            loading={prediadorDetalleLoading}
+            dataSource={prediadorDetalle}
             columns={[
               { title: 'Prediador', dataIndex: 'prediador_nombre', key: 'prediador_nombre', sorter: true },
               { title: 'SAP Prediador', dataIndex: 'prediador_sap' },
@@ -1093,13 +938,8 @@ const exportPrediadorDetalleToExcel = async () => {
             pagination={{
               current: prediadorDetallePage,
               pageSize: prediadorDetallePageSize,
-              total: rqPrediadorDetalle.data?.total || 0,
-              showSizeChanger: true,            
-            //pagination={{
-            //  current: prediadorDetallePage,
-            //  pageSize: prediadorDetallePageSize,
-            //  total: prediadorDetalleTotal,
-            //  showSizeChanger: true,
+              total: prediadorDetalleTotal,
+              showSizeChanger: true,
             }}
             onChange={(pagination, _filters, sorter) => {
               setPrediadorDetallePage(pagination.current || 1);

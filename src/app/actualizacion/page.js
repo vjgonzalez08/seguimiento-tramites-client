@@ -21,7 +21,7 @@ import {
   getPromedioDiasSinRespuesta,     // ✅ BLOQUE 3
   getDevueltosPorPrediadorResumen, // BLOQUE 5 Gráfica detalle x prediador
   getDevueltosPorPrediadorDetalle, // BLOQUE 5 Tabla detalle x prediador
-} from '@/features/conservacion/service';
+} from '@/features/actualizacion/service';
 
 /* ===== Inicialización dinámica de módulos Highcharts ===== */
 function initHighchartsModule(mod, Highcharts) {
@@ -72,7 +72,7 @@ function KpiItem({ label, value, tone = 'neutral' }) {
   );
 }
 
-export default function ConservacionPage() {
+export default function ActualizacionPage() {
   // ✅ Flag para NO eliminar tu UI vieja (solo la ocultamos por ahora)
   const SHOW_OLD_CARDS = false;
 
@@ -142,7 +142,7 @@ const conRespTotalSla = useMemo(() => {
   /*======NUEVO =====*/
     const rqPrediadorDetalle = useQuery({
       queryKey: [
-        'conservacion',
+        'actualizacion',
         'tabla',
         'prediador-detalle',
         prediadorDetallePage,
@@ -279,57 +279,57 @@ const exportPrediadorDetalleToExcel = async () => {
 };
 
 
-  /* =====NUEVO React Query — KPIs Conservación ===== */
+  /* =====NUEVO React Query — KPIs Actualización ===== */
     const rqTotalDevueltos = useQuery({
-      queryKey: ['conservacion', 'kpi', 'total-devueltos'],
+      queryKey: ['actualizacion', 'kpi', 'total-devueltos'],
       queryFn: getTotalTramitesDevueltos,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqDevueltosConRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'devueltos-con-respuesta'],
+      queryKey: ['actualizacion', 'kpi', 'devueltos-con-respuesta'],
       queryFn: getTotalTramitesDevueltosConRespuesta,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqDevueltosSinRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'devueltos-sin-respuesta'],
+      queryKey: ['actualizacion', 'kpi', 'devueltos-sin-respuesta'],
       queryFn: getTotalTramitesDevueltosSinRespuesta,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqCorteSap = useQuery({
-      queryKey: ['conservacion', 'kpi', 'corte-sap'],
+      queryKey: ['actualizacion', 'kpi', 'corte-sap'],
       queryFn: getCorteDatosSap,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqCumplenConRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'con-respuesta-cumplen'],
+      queryKey: ['actualizacion', 'kpi', 'con-respuesta-cumplen'],
       queryFn: getTramitesDevueltosCumplen,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqSinRespuestaSla = useQuery({
-      queryKey: ['conservacion', 'kpi', 'sin-respuesta-sla'],
+      queryKey: ['actualizacion', 'kpi', 'sin-respuesta-sla'],
       queryFn: getTramitesDevueltosSinRespuestaSla,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqPromDiasRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'promedio-dias-respuesta'],
+      queryKey: ['actualizacion', 'kpi', 'promedio-dias-respuesta'],
       queryFn: getPromedioDiasRespuesta,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqPromDiasSinRespuesta = useQuery({
-      queryKey: ['conservacion', 'kpi', 'promedio-dias-sin-respuesta'],
+      queryKey: ['actualizacion', 'kpi', 'promedio-dias-sin-respuesta'],
       queryFn: getPromedioDiasSinRespuesta,
       staleTime: 24 * 60 * 60 * 1000,
     });
 
     const rqResumenPrediador = useQuery({
-      queryKey: ['conservacion', 'b5', 'prediador-resumen'],
+      queryKey: ['actualizacion', 'b5', 'prediador-resumen'],
       queryFn: getDevueltosPorPrediadorResumen,
       staleTime: 24 * 60 * 60 * 1000,
     });
@@ -658,7 +658,7 @@ const exportPrediadorDetalleToExcel = async () => {
         {/* ===== HEADER CONTEXTO + CORTE SAP ===== */}
         <div style={{ marginBottom: '1rem' }}>
           <div style={{ fontSize: '1.15rem', fontWeight: 750, color: '#1f1f1f', marginBottom: 6 }}>
-            Conservación
+            Actualización
           </div>
           <div style={{ fontSize: '1.15rem', fontWeight: 750, color: '#1f1f1f', marginBottom: 6 }}>
             Dashboard - Seguimiento Trámites Devueltos

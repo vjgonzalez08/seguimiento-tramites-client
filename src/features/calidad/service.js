@@ -3,7 +3,7 @@ import axios from '@/lib/api';
 // Obtener total de trámites devueltos
 export const getTotalTramitesDevueltos = async () => {
   try {
-    const response = await axios.get('/conservacion/devueltos');
+    const response = await axios.get('/calidad/devueltos');
     return response.data;
   } catch (error) {
     console.error('Error al obtener total de trámites devueltos:', error);
@@ -14,7 +14,7 @@ export const getTotalTramitesDevueltos = async () => {
 // Obtener total de trámites devueltos con respuesta
 export const getTotalTramitesDevueltosConRespuesta = async () => {
   try {
-    const response = await axios.get('/conservacion/devueltos-con-respuesta');
+    const response = await axios.get('/calidad/devueltos-con-respuesta');
     return response.data;
   } catch (error) {
     console.error('Error al obtener trámites devueltos con respuesta:', error);
@@ -25,7 +25,7 @@ export const getTotalTramitesDevueltosConRespuesta = async () => {
 // Obtener total de trámites devueltos sin respuesta
 export const getTotalTramitesDevueltosSinRespuesta = async () => {
   try {
-    const response = await axios.get('/conservacion/devueltos-sin-respuesta');
+    const response = await axios.get('/calidad/devueltos-sin-respuesta');
     return response.data;
   } catch (error) {
     console.error('Error al obtener trámites devueltos sin respuesta:', error);
@@ -36,7 +36,7 @@ export const getTotalTramitesDevueltosSinRespuesta = async () => {
 // Corte Datos SAP
 export const getCorteDatosSap = async () => {
   try {
-    const response = await axios.get('/conservacion/corte-datos');
+    const response = await axios.get('/calidad/corte-datos');
     return response.data;
   } catch (error) {
     console.error('Error al obtener corte de datos SAP:', error);
@@ -47,7 +47,7 @@ export const getCorteDatosSap = async () => {
 // Datos para solid gauge (cumplen SLA con respuesta)
 export const getTramitesDevueltosCumplen = async () => {
   try {
-    const response = await axios.get('/conservacion/cumplen');
+    const response = await axios.get('/calidad/cumplen');
     return response.data;
   } catch (error) {
     console.error('Error al obtener cumplimiento de trámites:', error);
@@ -59,7 +59,7 @@ export const getTramitesDevueltosCumplen = async () => {
 // Trámites devueltos SIN respuesta clasificados por SLA
 export const getTramitesDevueltosSinRespuestaSla = async () => {
   try {
-    const response = await axios.get('/conservacion/sin-respuesta-sla');
+    const response = await axios.get('/calidad/sin-respuesta-sla');
     return response.data;
   } catch (error) {
     console.error('Error al obtener SLA sin respuesta:', error);
@@ -74,7 +74,7 @@ export const getTramitesDevueltosSinRespuestaSla = async () => {
 // Días promedio de respuesta (trámites devueltos CON respuesta)
 export const getPromedioDiasRespuesta = async () => {
   try {
-    const response = await axios.get('/conservacion/promedio-respuesta');
+    const response = await axios.get('/calidad/promedio-respuesta');
     return response.data;
   } catch (error) {
     console.error('Error al obtener promedio de días de respuesta:', error);
@@ -85,7 +85,7 @@ export const getPromedioDiasRespuesta = async () => {
 // Días promedio sin respuesta (trámites devueltos SIN respuesta)
 export const getPromedioDiasSinRespuesta = async () => {
   try {
-    const response = await axios.get('/conservacion/promedio-sin-respuesta');
+    const response = await axios.get('/calidad/promedio-sin-respuesta');
     return response.data;
   } catch (error) {
     console.error('Error al obtener promedio de días sin respuesta:', error);
@@ -100,7 +100,7 @@ export const getPromedioDiasSinRespuesta = async () => {
 // Gráfica: resumen por prediador (quien recibe la devolución)
 export const getDevueltosPorPrediadorResumen = async () => {
   try {
-    const response = await axios.get('/conservacion/prediadores/resumen');
+    const response = await axios.get('/calidad/prediadores/resumen');
     return response.data;
   } catch (error) {
     console.error('Error al obtener resumen de devueltos por prediador:', error);
@@ -126,7 +126,7 @@ export const getDevueltosPorPrediadorDetalle = async (params = {}) => {
     query.set('sortField', String(sortField));
     query.set('sortOrder', String(sortOrder));
 
-    const response = await axios.get(`/conservacion/prediadores/detalle?${query.toString()}`);
+    const response = await axios.get(`/calidad/prediadores/detalle?${query.toString()}`);
     return response.data;
   } catch (error) {
     console.error('Error al obtener detalle de devueltos por prediador:', error);
