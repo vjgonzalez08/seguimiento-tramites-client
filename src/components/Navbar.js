@@ -28,15 +28,26 @@ const Navbar = () => {
         }}
       >
         {/* Logo a la izquierda */}
-        <Link href="/">
+        <Link
+          href="/"
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+          }}
+        >
           <Image
             src="https://cdnwordpresstest-f0ekdgevcngegudb.z01.azurefd.net/es/wp-content/themes/theme_alcaldia/logos/logo_footer.png"
-            alt="Logo institucional"
+            alt="Ir al inicio"
             width={80}
             height={50}
             priority
           />
         </Link>
+
+
 
         {/* Menú centrado respecto al viewport */}
         <div
