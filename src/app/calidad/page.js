@@ -246,10 +246,10 @@ const exportPrediadorDetalleToExcel = async () => {
       const fechaSalida = fechaSalidaRaw === '1900-01-01' ? '' : fechaSalidaRaw;
 
       return {
-        'Prediador Recibe': r.prediador_nombre || '',
-        'Usuario SAP Prediador': r.prediador_sap || '',
-        'Revisor Devuelve': r.revisor_nombre || '',
-        'Usuario SAP Revisor': r.revisor_sap || '',
+        'Revisor Recibe': r.prediador_nombre || '',
+        'Usuario SAP Revisor': r.prediador_sap || '',
+        'Calidad Devuelve': r.revisor_nombre || '',
+        'Usuario SAP Calidad': r.revisor_sap || '',
         'Número de trámite': r.nm_solicitud ?? '',
         'Fecha entrega': fechaEntrega,
         'Fecha salida': fechaSalida,
@@ -270,7 +270,7 @@ const exportPrediadorDetalleToExcel = async () => {
     const mm = String(ts.getMonth() + 1).padStart(2, '0');
     const dd = String(ts.getDate()).padStart(2, '0');
 
-    const fileName = `tramites_devueltos_prediadores_${yyyy}-${mm}-${dd}.xlsx`;
+    const fileName = `tramites_devueltos_calidad_${yyyy}-${mm}-${dd}.xlsx`;
 
     XLSX.writeFile(wb, fileName);
   } catch (e) {
@@ -516,7 +516,7 @@ const exportPrediadorDetalleToExcel = async () => {
     title: { text: null },
     xAxis: {
       categories: prediadorBarData.categories,
-      title: { text: 'Prediador' },
+      title: { text: 'Revisor' },
       labels: { style: { fontSize: '12px' } },
     },
     yAxis: {
@@ -729,7 +729,7 @@ const exportPrediadorDetalleToExcel = async () => {
           </div>
 
           <div style={{ fontSize: '0.7rem', color: '#6b6b6b', marginTop: '1.4rem', textAlign: 'left',width: '100%', }}>
-            Total trámites devueltos de revisor a prediador y su estado de respuesta
+            Total trámites devueltos de calidad a revisor y su estado de respuesta
           </div>          
         </div>
 
@@ -974,11 +974,11 @@ const exportPrediadorDetalleToExcel = async () => {
           }}
         >
           <div style={{ fontSize: '1.1rem', fontWeight: 750, marginBottom: 12 }}>
-            Trámites devueltos a prediadores
+            Trámites devueltos a revisores
           </div>
 
           <div style={{ fontSize: '0.8rem', color: '#6b6b6b', marginBottom: 12 }}>
-            Total de trámites devueltos por prediador (ordenado de mayor a menor)
+            Total de trámites devueltos por calidad (ordenado de mayor a menor)
           </div>
 
           {modulesReady && (
@@ -989,12 +989,12 @@ const exportPrediadorDetalleToExcel = async () => {
         {/* TABLA DETALLE X PREDIADOR */}        
         <div style={{ marginTop: '1.5rem', marginBottom: '3rem' }}>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: 12 }}>
-            <div style={{ fontWeight: 650 }}>Filtrar por prediador:</div>
+            <div style={{ fontWeight: 650 }}>Filtrar por revisor:</div>
 
             <Select
               style={{ minWidth: 340 }}
               allowClear
-              placeholder="Seleccione prediador"
+              placeholder="Seleccione revisor"
               value={prediadorSapFilter}
               onChange={(v) => {
                 setPrediadorSapFilter(v || null);
@@ -1023,10 +1023,10 @@ const exportPrediadorDetalleToExcel = async () => {
             //loading={prediadorDetalleLoading}
             //dataSource={prediadorDetalle}
             columns={[
-              { title: 'Prediador', dataIndex: 'prediador_nombre', key: 'prediador_nombre', sorter: true },
-              { title: 'SAP Prediador', dataIndex: 'prediador_sap' },
-              { title: 'Revisor', dataIndex: 'revisor_nombre', key: 'revisor_nombre', sorter: true },
-              { title: 'SAP Revisor', dataIndex: 'revisor_sap' },
+              { title: 'Revisor', dataIndex: 'prediador_nombre', key: 'prediador_nombre', sorter: true },
+              { title: 'SAP Revisor', dataIndex: 'prediador_sap' },
+              { title: 'Calidad', dataIndex: 'revisor_nombre', key: 'revisor_nombre', sorter: true },
+              { title: 'SAP Calidad', dataIndex: 'revisor_sap' },
               { title: 'Trámite', dataIndex: 'nm_solicitud' },
               {title: 'Fecha entrega',
                 dataIndex: 'fc_recepcion_tmt',
