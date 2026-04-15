@@ -21,7 +21,7 @@ import {
   getPromedioDiasSinRespuesta,     // ✅ BLOQUE 3
   getDevueltosPorPrediadorResumen, // BLOQUE 5 Gráfica detalle x prediador
   getDevueltosPorPrediadorDetalle, // BLOQUE 5 Tabla detalle x prediador
-} from '@/features/mutaciones/service';
+} from '@/features/mutaciones1y5/service';
 
 /* ===== Inicialización dinámica de módulos Highcharts ===== */
 function initHighchartsModule(mod, Highcharts) {
@@ -658,7 +658,7 @@ const exportPrediadorDetalleToExcel = async () => {
         {/* ===== HEADER CONTEXTO + CORTE SAP ===== */}
         <div style={{ marginBottom: '1rem' }}>
           <div style={{ fontSize: '1.15rem', fontWeight: 750, color: '#1f1f1f', marginBottom: 6 }}>
-            Mutaciones
+            Mutaciones 1 y 5
           </div>
           <div style={{ fontSize: '1.15rem', fontWeight: 750, color: '#1f1f1f', marginBottom: 6 }}>
             Dashboard - Seguimiento Trámites Devueltos

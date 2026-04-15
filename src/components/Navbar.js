@@ -10,7 +10,8 @@ const menuItems = [
   { key: 'conservacion', label: <Link href="/conservacion">Conservación</Link> },
   { key: 'actualizacion', label: <Link href="/actualizacion">Actualización</Link> },
   { key: 'calidad', label: <Link href="/calidad">Calidad</Link> },
-  { key: 'mutaciones', label: <Link href="/mutaciones">Mutaciones</Link> },
+  { key: 'mutaciones1y5', label: <Link href="/mutaciones1y5">Mutaciones 1 y 5</Link> },
+  { key: 'mutaciones23y4', label: <Link href="/mutaciones23y4">Mutaciones 2, 3 y 4</Link> },
   { key: 'juridica', label: <Link href="/juridica">Jurídica</Link> },  
   /*{ key: 'buscar', label: <Link href="/buscar">Buscar</Link> },*/
 ];
